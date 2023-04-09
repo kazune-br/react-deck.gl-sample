@@ -1,10 +1,11 @@
 import { useState } from "react";
-import DeckGL from "@deck.gl/react/typed";
-import { Map } from "react-map-gl";
-import maplibregl from "maplibre-gl";
+
 import { LineLayer } from "@deck.gl/layers/typed";
+import DeckGL from "@deck.gl/react/typed";
 import { MantineProvider, Group } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
+import maplibregl from "maplibre-gl";
+import { Map } from "react-map-gl";
 import "./App.css";
 
 const INITIAL_VIEW_STATE = {
