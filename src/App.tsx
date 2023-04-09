@@ -3,6 +3,8 @@ import DeckGL from "@deck.gl/react/typed";
 import { Map } from "react-map-gl";
 import maplibregl from "maplibre-gl";
 import { LineLayer } from "@deck.gl/layers/typed";
+import { MantineProvider, Group } from "@mantine/core";
+import { DatePicker } from "@mantine/dates";
 import "./App.css";
 
 const INITIAL_VIEW_STATE = {
@@ -14,13 +16,13 @@ const INITIAL_VIEW_STATE = {
 };
 
 const data: { [key: string]: [{ [key: string]: Array<number> }] } = {
-  "2023-03-23": [
+  "2023-3-23": [
     {
       sourcePosition: [-122.41669, 37.7853],
       targetPosition: [-122.41669, 37.781],
     },
   ],
-  "2023-03-24": [
+  "2023-3-24": [
     {
       sourcePosition: [-122.41669, 37.8],
       targetPosition: [-122.41669, 37.7],
@@ -29,10 +31,17 @@ const data: { [key: string]: [{ [key: string]: Array<number> }] } = {
 };
 
 function App() {
-  const [date, setDate] = useState("2023-03-23");
+  const [date, setDate] = useState<Date | null>(new Date("2023-03-23"));
+  console.log(date);
+  let month = date?.getMonth();
+  if (date?.getMonth() != undefined) {
+    month = date.getMonth() + 1;
+  }
+  const year = date?.getFullYear();
+  const day = date?.getDate();
+  const dateString = year + "-" + month + "-" + day;
 
-  const layers = [new LineLayer({ id: "line-layer", data: data[date] })];
-
+  const layers = [new LineLayer({ id: "line-layer", data: data[dateString] })];
   return (
     <div className="App">
       <DeckGL
@@ -45,14 +54,11 @@ function App() {
           mapLib={maplibregl}
           mapStyle="https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json"
         />
-        <div className="form-check">
-          <input
-            type="date"
-            value={date}
-            onChange={(event) => setDate(event.target.value)}
-          />
-          <div>{date.replace("T", " ")}が選択されました！</div>
-        </div>
+        <MantineProvider withGlobalStyles withNormalizeCSS>
+          <Group position="center">
+            <DatePicker value={date} onChange={setDate} />
+          </Group>
+        </MantineProvider>
       </DeckGL>
     </div>
   );
