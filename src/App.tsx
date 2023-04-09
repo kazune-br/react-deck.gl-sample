@@ -60,7 +60,7 @@ function App() {
               style={{ background: "lightgrey" }}
               value={date}
               onChange={setDate}
-              defaultValue={new Date("2023-03-23")}
+              defaultDate={new Date("2023-03-23")}
             />
           </Group>
         </MantineProvider>
