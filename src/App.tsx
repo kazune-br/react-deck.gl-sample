@@ -13,16 +13,25 @@ const INITIAL_VIEW_STATE = {
   bearing: 0,
 };
 
-const data = [
-  {
-    sourcePosition: [-122.41669, 37.7853],
-    targetPosition: [-122.41669, 37.781],
-  },
-];
+const data: { [key: string]: [{ [key: string]: Array<number> }] } = {
+  "2023-03-23": [
+    {
+      sourcePosition: [-122.41669, 37.7853],
+      targetPosition: [-122.41669, 37.781],
+    },
+  ],
+  "2023-03-24": [
+    {
+      sourcePosition: [-122.41669, 37.8],
+      targetPosition: [-122.41669, 37.7],
+    },
+  ],
+};
 
 function App() {
   const [date, setDate] = useState("2023-03-23");
-  const layers = [new LineLayer({ id: "line-layer", data })];
+
+  const layers = [new LineLayer({ id: "line-layer", data: data[date] })];
 
   return (
     <div className="App">
@@ -35,7 +44,7 @@ function App() {
           style={{ width: "100%", height: "100%" }}
           mapLib={maplibregl}
           mapStyle="https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json"
-        ></Map>
+        />
         <div className="form-check">
           <input
             type="date"
