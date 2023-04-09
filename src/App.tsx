@@ -1,5 +1,7 @@
 import { useState } from "react";
 import DeckGL from "@deck.gl/react/typed";
+import { Map } from "react-map-gl";
+import maplibregl from "maplibre-gl";
 import { LineLayer } from "@deck.gl/layers/typed";
 import "./App.css";
 
@@ -19,37 +21,30 @@ const data = [
 ];
 
 function App() {
-  const [count, setCount] = useState(0);
   const [date, setDate] = useState("2023-03-23");
   const layers = [new LineLayer({ id: "line-layer", data })];
 
   return (
     <div className="App">
-      <div className="form-check">
-        <input
-          type="date"
-          value={date}
-          onChange={(event) => setDate(event.target.value)}
-        />
-        <div>{date.replace("T", " ")}が選択されました！</div>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
       <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         controller={true}
         layers={layers}
-      />
+      >
+        <Map
+          style={{ width: "100%", height: "100%" }}
+          mapLib={maplibregl}
+          mapStyle="https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json"
+        ></Map>
+        <div className="form-check">
+          <input
+            type="date"
+            value={date}
+            onChange={(event) => setDate(event.target.value)}
+          />
+          <div>{date.replace("T", " ")}が選択されました！</div>
+        </div>
+      </DeckGL>
     </div>
   );
 }
