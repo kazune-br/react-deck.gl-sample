@@ -33,7 +33,6 @@ const data: { [key: string]: [{ [key: string]: Array<number> }] } = {
 
 function App() {
   const [date, setDate] = useState<Date | null>(new Date("2023-03-23"));
-  console.log(date);
   let month = date?.getMonth();
   if (date?.getMonth() != undefined) {
     month = date.getMonth() + 1;
@@ -56,8 +55,13 @@ function App() {
           mapStyle="https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json"
         />
         <MantineProvider withGlobalStyles withNormalizeCSS>
-          <Group position="center">
-            <DatePicker value={date} onChange={setDate} />
+          <Group position="left">
+            <DatePicker
+              style={{ background: "lightgrey" }}
+              value={date}
+              onChange={setDate}
+              defaultValue={new Date("2023-03-23")}
+            />
           </Group>
         </MantineProvider>
       </DeckGL>
